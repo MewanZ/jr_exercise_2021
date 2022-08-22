@@ -66,7 +66,24 @@ namespace CouncilWise
         /// <returns>processed receipt</returns>
         static Receipt ProcessReceiptItems(ICollection<ReceiptItem> items)
         {
-            throw new NotImplementedException();
+            Receipt receipt = new Receipt();
+            foreach (var item in items)
+            {
+                if (item.IncludesTax)
+                {
+                    item.TaxAmount = Helper.CurrencyRound((item.UnitPrice) / 11);
+                }
+                else
+                {
+                    item.TaxAmount = Helper.CurrencyRound(item.UnitPrice * Helper.TaxRate);
+                }
+
+                receipt.TaxTotal += (item.TaxAmount * item.Quantity);
+                receipt.Total += (item.IncludesTax) ? item.UnitPrice * item.Quantity : (item.UnitPrice + item.TaxAmount) * item.Quantity;
+                receipt.Items.Add(item);
+            }
+
+            return receipt;
         }
     }
 }
