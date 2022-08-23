@@ -51,8 +51,36 @@ namespace CouncilWise
             var receiptResult = ProcessReceiptItems(items);
             Console.WriteLine(receiptResult.ToString());
 
+            //palindrome item which include tax
             items = new List<ReceiptItem>();
             items.Add(new ReceiptItem { Name = "freebie eibeerf", Quantity = 4, UnitPrice = 1.15m, IncludesTax = true });
+            receiptResult = ProcessReceiptItems(items);
+            Console.WriteLine(receiptResult.ToString());
+
+            //palindrome item which not include tax
+            items = new List<ReceiptItem>();
+            items.Add(new ReceiptItem { Name = "freebie eibeerf", Quantity = 4, UnitPrice = 1.15m, IncludesTax = false });
+            receiptResult = ProcessReceiptItems(items);
+            Console.WriteLine(receiptResult.ToString());
+
+            //palindrome item include upper case letters in item name
+            items = new List<ReceiptItem>();
+            items.Add(new ReceiptItem { Name = "Freebie Eibeerf", Quantity = 4, UnitPrice = 1.15m, IncludesTax = true });
+            receiptResult = ProcessReceiptItems(items);
+            Console.WriteLine(receiptResult.ToString());
+
+            //palindrome item which is item name is in upper case letters
+            items = new List<ReceiptItem>();
+            items.Add(new ReceiptItem { Name = "FREEBIE EIBEERF", Quantity = 4, UnitPrice = 1.15m, IncludesTax = true });
+            receiptResult = ProcessReceiptItems(items);
+            Console.WriteLine(receiptResult.ToString());
+
+            //List of items with palindrome item
+            items = new List<ReceiptItem>();
+            items.Add(new ReceiptItem { Name = "taco cat", Quantity = 4, UnitPrice = 1.15m, IncludesTax = true });
+            items.Add(new ReceiptItem { Name = "Bouncy Ball", Quantity = 4, UnitPrice = 1.15m, IncludesTax = true });
+            items.Add(new ReceiptItem { Name = "Doll's House", Quantity = 1, UnitPrice = 213.99m, IncludesTax = true });
+            items.Add(new ReceiptItem { Name = "In-store assist hrs", Quantity = 2, UnitPrice = 25.30m, IncludesTax = false });
             receiptResult = ProcessReceiptItems(items);
             Console.WriteLine(receiptResult.ToString());
 
@@ -70,7 +98,7 @@ namespace CouncilWise
             foreach (var item in items)
             {
                 //if the item is a palindrome, item unit price change to 0.00m
-                string inputString = item.Name;
+                string inputString = item.Name.ToLower().Replace(" ", string.Empty);
                 string reverseString = string.Empty;
                 if (inputString != null)
                 {
