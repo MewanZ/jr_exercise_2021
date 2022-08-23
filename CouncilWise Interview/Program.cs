@@ -69,6 +69,24 @@ namespace CouncilWise
             Receipt receipt = new Receipt();
             foreach (var item in items)
             {
+                //if the item is a palindrome, item unit price change to 0.00m
+                string inputString = item.Name;
+                string reverseString = string.Empty;
+                if (inputString != null)
+                {
+                    for (int i = inputString.Length - 1; i >= 0; i--)
+                    {
+                        reverseString += inputString[i].ToString();
+                    }
+                    if (inputString == reverseString)
+                    {
+
+                        item.UnitPrice = 0.00m;
+                    }
+
+                }
+
+
                 if (item.IncludesTax)
                 {
                     item.TaxAmount = Helper.CurrencyRound((item.UnitPrice) / 11);
